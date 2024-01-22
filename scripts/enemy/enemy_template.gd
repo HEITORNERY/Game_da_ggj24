@@ -31,6 +31,13 @@ export(int) var proximity_threshold # Limite de proximidade do inimigo pro playe
 # Declarar a variável para a posição padrão do raycast do solo
 export(int) var raycast_default_position
 
+# Declarado uma variável do tipo lista, para armazenar os itens dropados pelo inimigo
+var drop_list : Dictionary
+
+# Criar o multiplicador do número gerado pelo dado de probabilidade
+# Por padrão, vai começar com 1, pois quando a probabilidade é pequena vai multiplicar o número do dado multiplicador por 1
+var drop_bonus : int = 1
+
 # Chamar a função de atualizar o estado a cada frame
 func _physics_process(delta: float) -> void:
 	gravity(delta) # Função de gravidade
@@ -88,3 +95,43 @@ func verify_position() -> void:
 			
 func kill_enemy() -> void: # Função para morte do inimigo
 	animation.play('kill') # Iniciar a animação de kill
+	
+	# O inimigo vai ter um método a ser chamado, depois que morrer, isso vai estar em todos os inimigos
+	spawn_item_probability()
+	
+func spawn_item_probability() -> void: 
+	# Aqui dentro vai ser rodado um dado de 0 a 20, que vai ser multiplicado por um multiplicador de drop, no qual, vai ser correspondente a porcentagem de drop desse item
+	var random_number : int = randi() % 21
+	
+	if random_number <= 6: # Configura a menor probabilidade
+		drop_bonus = 1 # O bônus de drop multiplicador é 1
+	
+	elif random_number >= 7 and random_number <= 13:
+		drop_bonus = 2 #
+		
+	else:
+		drop_bonus = 3
+		
+	
+	for key in drop_list.keys(): # Aqui vai ser acessado cada chave da drop list e vai verificar suas propriedades
+		var rng : int = randi() % 100 + 1 # Aqui vai ser gerado um número entre 0 e 100, pois a probabilidade de drop de cada item é um valor entre 0 e 100%
+		if rng <= drop_list[key][1] * drop_bonus: # Aqui verifica se o número aleatório gerado pelo dado e pela multiplicação do drop é menor ou igual a porcentagem do item da lista de drop, baseado nas chaves e na porcentagem de cada chave
+			# Caso a condição seja satisfeita, o item é dropado
+			var item_texture : StreamTexture = load(drop_list[key][0])# Aqui é uma variável do tipo stream texture serve para carregar uma imagem já salva na memória
+			 # Agora a stream texture vai acessar a drop list e vai pegar o caminho da imagem do item e vai carregá-lo na cena 
+			var item_info : Array = [drop_list[key][0],drop_list[key][2],drop_list[key][3],drop_list[key][4], 1]# Essa variável vai armazenar todas as outras informações do item, que não é seu caminho na memória, para que o personagem possa acessá-los
+			# O último valor de 1 é referente a quantidade de itens a ser dropado do tipo especificado na item info
+			
+			spawn_physic_item(key, item_texture, item_info) # Método para spawnar o item físico no cenário
+			# Para o item ser spawnado precisa da chave, que corresponde ao nome do item, do seu caminho, além de suas informações, por isso o uso de key, item texture e item info
+			
+func spawn_physic_item(key: String, item_texture: StreamTexture, item_info: Array) -> void:
+	var physic_item_scene = load('res://scenes/env/physic_item.tscn') # Aqui vai ser carregada a cena do item
+	var item : PhysicItem = physic_item_scene.instance() # AQui vai ser chamado o objeto do item, pois a cena precisa que o objeto seja carregado e esteja ṕpronto, antes de rodar o código de spawnar o item
+	get_tree().root.call_deferred('add_child', item) # AQui vai ser acessada a árvore da cena, e vai adicionar o objeto do item como filho dela
+	# Assim evita-se que os itens dropados sejam deletados, após o monstro morrer
+	
+	item.global_position = global_position # O item vai aparecer, a partir da posição de morte do monstro e vai ser impulsionado de lá 
+	
+	item.update_item_info(key, item_texture, item_info) # AQui é fornecido as informações para a função de atualizar a informação do item, que está no physics item
+	
