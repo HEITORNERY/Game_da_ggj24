@@ -9,7 +9,7 @@ export(NodePath) onready var attack_area_collision = get_node(attack_area_collis
 export(NodePath) onready var animation = get_node(animation) as AnimationPlayer
 
 # Criar a função de animação para receber a velocity do inimigo e aplicar na animação de correr
-func animate(velocity: Vector2) -> void:
+func animate(_velocity: Vector2) -> void:
 	pass
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://resources/floor.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/env/mask.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://scenes/player/player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://scripts/management/level.gd" type="Script" id=7]
 [ext_resource path="res://scenes/enemy/whale.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/interface/general/hud.tscn" type="PackedScene" id=9]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -45,7 +46,7 @@ can_process = false
 [node name="Mask" parent="." instance=ExtResource( 2 )]
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
-position = Vector2( -22, 163 )
+position = Vector2( -18, 166 )
 jump_speed = -250
 
 [node name="Environment" type="WorldEnvironment" parent="."]
@@ -55,3 +56,5 @@ environment = SubResource( 1 )
 
 [node name="Whale" parent="Enemy" instance=ExtResource( 8 )]
 position = Vector2( 218, 181 )
+
+[node name="Hud" parent="." instance=ExtResource( 9 )]

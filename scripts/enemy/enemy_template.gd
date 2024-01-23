@@ -38,6 +38,9 @@ var drop_list : Dictionary
 # Por padrão, vai começar com 1, pois quando a probabilidade é pequena vai multiplicar o número do dado multiplicador por 1
 var drop_bonus : int = 1
 
+# Criando uma variável para a quantidade de exp fornecido pelo inimigo ao morrer
+export(int) var enemy_exp 
+
 # Chamar a função de atualizar o estado a cada frame
 func _physics_process(delta: float) -> void:
 	gravity(delta) # Função de gravidade
@@ -98,6 +101,9 @@ func kill_enemy() -> void: # Função para morte do inimigo
 	
 	# O inimigo vai ter um método a ser chamado, depois que morrer, isso vai estar em todos os inimigos
 	spawn_item_probability()
+	
+	# Vai ser atualizado a exp, após a morte do inimigo e cada inimigo terá a sua exp liberada
+	get_tree().call_group('player_stats', 'update_exp', enemy_exp)
 	
 func spawn_item_probability() -> void: 
 	# Aqui dentro vai ser rodado um dado de 0 a 20, que vai ser multiplicado por um multiplicador de drop, no qual, vai ser correspondente a porcentagem de drop desse item

@@ -65,17 +65,24 @@ func _ready():
 	max_mana = current_mana # AQui o máximo de mana vai ser o tanto de mana que tem no momento
 	current_health = base_health + bonus_health # A vida atual é a soma da vida inicial e os bônus adquiridos
 	max_health = current_health # AQui o máximo de vida vai ser o tanto de vida que tem no momento
+	
+	# Aqui vou estar acessando o grupo da barra, para poder inicializar a barra com os valores de staus do personagem
+	get_tree().call_group('bar_container', 'init_bar', max_health, max_mana, level_dict[str(level)])
 
 # Aqui vai ser criado uma função para atualizar a experiência do personagem
 func update_exp(value: int) -> void: # Essa função precisa receber um valor do tiṕpo inteiro, pois a experiência é um valor do tipo inteiro
 	current_exp += value # AQui quando a função de atualizar experiência for chamada, a  experiência atual vai ser somado o valor de value
 	
+	# Aqui vai ser chamado o grupo da barra de exp, pois o método de atualizar a barra de exp vai precisar ser chamado aqui, antes de executar a verificação de subir de nível
+	get_tree().call_group('bar_container', 'update_bar', 'ExpBar', current_exp) # Isso daqui atualiza a barra de vida com a xp atual recebida ao derrotar o inimigo
+	 
+	
 	# Condição de aumentar o nível com base na experiência
 	if current_exp >= level_dict[str(level)] and level < 9: # Aqui verifica se a experiência é suficiente para subir pro outro nível
 		var leftover : int = current_exp - level_dict[str(level)] # Aqui a variável de resto vai armazenar o resto da subtração da mana atual pela mana necessária para subir de nível
 		current_exp = leftover # Agora quando subir de nível o resto de experiência vai ser salvo pro personagem
-		level += 1 # Personagem gastou experiência, logo seu nível subiu uma unidade
 		on_level_up() # Função para carregar as mudanças ao subir de nível
+		level += 1 # Personagem gastou experiência, logo seu nível subiu uma unidade
 		
 	elif current_exp >= level_dict[str(level)] and level == 9: #Situação de chegar no nível máximo
 		current_exp = level_dict[str(level)] # Aqui a experiência vai ser igual ao valor de experiência máxima do nível 9
@@ -86,6 +93,16 @@ func on_level_up() -> void:
 	current_mana = base_mana + bonus_mana
 	current_health = base_health + bonus_health 
 	
+	# Aqui também precisa acessar o grupo da barra, pois vai precisar atualizar a barra com o novo valor, depois de subir de nível, ou coletar itens
+	get_tree().call_group('bar_container', 'update_bar', 'ManaBar', current_mana) # Atualiza a barra de mana com o valor máximo pro nível e o bônus de mana caso tenha
+	get_tree().call_group('bar_container', 'update_bar', 'HealthBar', current_health) # Atualiza a barra de vida com o valor máximo pro nível e o bônus de vida caso tenha
+	
+	# Adicionado um temporizador, para a exp chegar ao valor máximo e só depois desse tempo ser resetada
+	yield(get_tree().create_timer(0.2), "timeout")
+	
+	#Aqui vai ser resetado a exp do personagem ao subir de nível pro valor desse nível e colocar a nova exp
+	get_tree().call_group('bar_container', 'reset_exp_bar', level_dict[str(level)], current_exp) 
+
 # AQui vai ser criado a função para atualizar a vida do personagem, seja quando receber dano ou usar um item
 func update_health(type: String, value: int) -> void: # ESsa função precisa de uma string para determinar se o efeito é dano ou ganho de vida, além do valor a ser aumentado ou reduzido
 	match type: # Aqui vai ser criado as condições de aumento ou redução de vida
@@ -103,6 +120,10 @@ func update_health(type: String, value: int) -> void: # ESsa função precisa de
 			else: # Tomou dano e não morreu
 				player.on_hit = true # On hit é a validação da situação de dano
 				player.attacking = false # Durante o dano não pode-se atacar
+				
+	# Independente de ter perdido vida ou ganhado, a barra de vida precisa receber um valor e ser atualizada
+	get_tree().call_group('bar_container', 'update_bar', 'HealthBar', current_health)
+	# ESsa função só vai ser chamada depois do match, ou seja, caso alguma situação de ganho ou perda de vida for verificada, a função de update bar vai receber esse valor e jogar na barra
 			
 func verify_shield(value: int) -> void: # O valor aqui é o do dano do inimigo
 	# Primeira condição é o personagem estar com escudo ativo
@@ -111,6 +132,7 @@ func verify_shield(value: int) -> void: # O valor aqui é o do dano do inimigo
 			return # Aqui o resto da função é interrompida a leitura, pois a condição acima foi validada
 		
 		# Criar uma variável pro dano e ela deve ser um valor absoluto, ou seja, um valor em módulo
+# warning-ignore:narrowing_conversion
 		var damage : int = abs((base_defense + bonus_defense) - value)
 		current_health -= damage
 		
@@ -128,6 +150,10 @@ func update_mana(type: String, value: int) -> void: # A mana vai ter duas opçõ
 			
 		'Decrease':
 			current_mana -= value
+			
+	# Independente de ter perdido mana ou ganhado, a barra de mana precisa receber um valor e ser atualizada
+	get_tree().call_group('bar_container', 'update_bar', 'ManaBar', current_mana)
+	# ESsa função só vai ser chamada depois do match, ou seja, caso alguma situação de ganho ou perda de mana for verificada, a função de update bar vai receber esse valor e jogar na barra
 
 # Função para testes de dano e morte
 func _process(_delta):

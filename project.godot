@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Control",
+"class": "BarContainer",
+"language": "GDScript",
+"path": "res://scripts/interface/player/bar_container.gd"
+}, {
 "base": "Area2D",
 "class": "CollisionArea",
 "language": "GDScript",
@@ -75,6 +80,7 @@ _global_script_classes=[ {
 "path": "res://scripts/env/background.gd"
 } ]
 _global_script_class_icons={
+"BarContainer": "",
 "CollisionArea": "",
 "DetectionArea": "",
 "EnemyAttackArea": "",

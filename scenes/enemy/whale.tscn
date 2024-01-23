@@ -422,6 +422,7 @@ speed = 60
 gravity_speed = 350
 proximity_threshold = 15
 raycast_default_position = -33
+enemy_exp = 30
 
 [node name="Texture" parent="." index="0"]
 texture = ExtResource( 2 )

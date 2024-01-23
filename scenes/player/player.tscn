@@ -424,18 +424,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 37, 38, 39 ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:collision_layer")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 4 ]
-}
 
 [sub_resource type="Animation" id=3]
 resource_name = "run"
@@ -639,7 +627,7 @@ autoplay = "light_animation"
 anims/RESET = SubResource( 14 )
 anims/light_animation = SubResource( 15 )
 
-[node name="Stats" type="Node" parent="."]
+[node name="Stats" type="Node" parent="." groups=["player_stats"]]
 script = ExtResource( 5 )
 player = NodePath("..")
 collision_area = NodePath("../CollisionArea")

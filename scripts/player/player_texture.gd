@@ -51,14 +51,14 @@ func verify_position(direction: Vector2) -> void:
 		suffix = '_right' # Aqui o personagem está olhando para direita, então o sufixo pro ataque é direita, assim o ataque a ser executado é o ataque com a direita
 		position = Vector2.ZERO # Aqui eu vou colocar meu personagem na origem toda vez, que estiver olhando para a direita
 		player.direction = -1 # Pois aqui a direção do impulso é contrária a direita, ou seja, negativo para a esquerda
-		player.wall_ray.cast_to = Vector2(11.2, 0) # Aqui vai ser configurado para onde o raio da parede aponta, quando estiver olhando para direita
+		player.wall_ray.cast_to = Vector2(11.2, 0) # Aqui vai ser configurado para onde o raio da parede aponta, quando estiver olhando para direita 
 		
 	elif direction.x < 0:
 		flip_h = true # 10 - Ele está com velocidae negativa, então está indo para esquerda, logo o personagem deve estar virado para essa direção
 		suffix = '_left' # Aqui o personagem está olhando para esquerda, então o sufixo pro ataque é esquerda, assim o ataque a ser executado é o ataque com a esquerda
 		position = Vector2(-2,0) # Isso daqui é para corigir a diferença entre a posição da espada do personagem e o limite da colisão do ataque
 		player.direction = 1 # Pois aqui a direção do impulso é contrária a esquerda, ou seja, positivo para a direita
-		player.wall_ray.cast_to = Vector2(-13.2, 0) # Aqui vai ser configurado para onde o raio da parede aponta, quando estiver olhando para esquerda vai ser 2 unidades maior, pois tem esse offset entre o limite da colisão e o braco do personagem
+		player.wall_ray.cast_to = Vector2(-13.2, 0) # Aqui vai ser configurado para onde o raio da parede aponta, quando estiver olhando para esquerda vai ser 2 unidades maior, pois tem esse offset entre o limite da colisão e o braco do personagem 
 
 func horizontal_behavior(direction: Vector2) -> void:
 	if direction.x != 0: # 11 - O personagem está em movimento

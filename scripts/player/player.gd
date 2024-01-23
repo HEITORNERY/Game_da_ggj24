@@ -186,3 +186,7 @@ func next_to_wall() -> bool: # Essa função retorna sim ou não para o personag
 		return false # Aqui é para caso o meu personagem não esteja no ar, ou não esteja colidindo com uma parede, a função vai ser falsa
 		# Assim com o personagem no chão ou sem colidir com a parede, não vai ter animação de deslize na parede ou gravidade do deslize
 		
+		
+		
+		
+	
