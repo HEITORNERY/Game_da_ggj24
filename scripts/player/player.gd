@@ -51,7 +51,16 @@ var on_hit : bool = false # Variável que checa se está levando dano
 
 var dead : bool = false # Variável que checa se a morte vai acontecer
 
-onready var stats : Node = get_node("Stats")
+onready var stats : Node = get_node("Stats") # Guardar referência ao objeto com o status do player
+
+# Criar uma constante para estar instanciando o feitiço
+const SPELL : PackedScene = preload('res://scenes/player/spell_area.tscn')
+
+export(int) var magic_attack_cost # Variável pro custo de mana, ao lançar um ataque mágico
+
+# Criar a variável de offset do feitico
+var spell_offset : Vector2 = Vector2(100, -50)
+# O valor de 100 pode virar -100, mas o -50 é fixo
 
 # Precisa-se de uma função que possa trabalhar com essas variáveis e aplicar essa física de movimento
 # Para isso existe a physics_process
@@ -134,14 +143,23 @@ func actions_env() -> void:
 
 func attack() -> void:
 	# Criar uma variável de condição pro ataque acontecer
-	var attack_condition : bool = not attacking and not defending and not crouching
+	var attack_condition : bool = not attacking and not defending and not crouching and is_on_floor()
 	# Como todas as variáveis attacking, defending e crouching são false, logo attack condition vira true
 	# Assim a variável de condição do ataque sendo verdadeira, o ataque pode ocorrer
 	# Se qualquer uma das variáveis for true, a negação fica false e ataque não será realizado
 	# A condição pro ataque é attack_condition ser true, o personagem estar no chão e a tecla de ataque ser pressionada
-	if Input.is_action_just_pressed('attack') and attack_condition and is_on_floor():
+	if Input.is_action_just_pressed('attack') and attack_condition:
 		attacking = true # Todas as condições satisfeitas, vai ter ataque
 		player_sprite.normal_attack = true # O ataque usado vai ser o normal 
+		
+	# Criado a condição pro ataque mágico, que por padrão é a mesma condição do ataque físico
+	# Além disso o jogador deve ter mana suficiente para o ataque mágico
+	elif Input.is_action_just_pressed('magic_attack') and attack_condition and stats.current_mana >= magic_attack_cost:
+		attacking = true # Personagem vai atacar
+		player_sprite.magic_attack = true # Vai ser usado o ataque mágico
+		spawn_spell()
+		stats.update_mana('Decrease', magic_attack_cost) # Reduza a mana, de acordo com o custo do ataque mágico
+		
 
 func defense() -> void: # Para a função de defesa, o princípio é o mesmo da de agachar
 	if Input.is_action_pressed('defense') and is_on_floor() and not crouching: # Aqui a tecla de defesa foi pressionada ou segurada e o personagem está no chão e não agachou, então pode realizar essa ação de defesa
@@ -186,7 +204,19 @@ func next_to_wall() -> bool: # Essa função retorna sim ou não para o personag
 		return false # Aqui é para caso o meu personagem não esteja no ar, ou não esteja colidindo com uma parede, a função vai ser falsa
 		# Assim com o personagem no chão ou sem colidir com a parede, não vai ter animação de deslize na parede ou gravidade do deslize
 		
+# Criado a função de spawnar o feitiço
+func spawn_spell() -> void:
+	# Criado a variável para chamar o script do feitiço
+	var spell : FireSpell = SPELL.instance() # A variável recebe uma instância da cena de feitiço
+	
+	# Associado a spell o dano do ataque mágico, com base no poder do personagem
+	spell.spell_damage = stats.base_attack_magic + stats.bonus_magic_attack
+	
+	# Mudar a posição de spawnar o feitiço
+	spell.global_position = global_position + spell_offset
 		
-		
-		
+	# Adiciona o feitiço como filho da cena
+	get_tree().root.call_deferred('add_child', spell)
+	
+	
 	

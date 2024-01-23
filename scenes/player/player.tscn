@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/player/char_red.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/player.gd" type="Script" id=2]
@@ -482,6 +482,22 @@ tracks/1/keys = {
 "values": [ 4 ]
 }
 
+[sub_resource type="Animation" id=18]
+resource_name = "spell_attack"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 64, 65, 66, 67, 68, 69, 70 ]
+}
+
 [sub_resource type="Animation" id=13]
 resource_name = "wall_slide"
 length = 0.2
@@ -566,6 +582,7 @@ player_gravity = 350
 wall_jump_speed = -175
 wall_gravity = 115
 wall_impulse_speed = 175
+magic_attack_cost = 5
 
 [node name="Texture" type="Sprite" parent="."]
 position = Vector2( 0, 2 )
@@ -594,6 +611,7 @@ anims/jump = SubResource( 5 )
 anims/landing = SubResource( 6 )
 anims/run = SubResource( 3 )
 anims/shield = SubResource( 12 )
+anims/spell_attack = SubResource( 18 )
 anims/wall_slide = SubResource( 13 )
 
 [node name="LevelCamera" type="Camera2D" parent="."]

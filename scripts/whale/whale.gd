@@ -10,7 +10,7 @@ func _ready() -> void:
 	randomize() # Aqui vai ser gerado um número aleatório de 0 a 100, que significa a porcentagem de drop do item
 	# O número gerado com o randomize vai ser comparado com a lista de drop e se for igual, esse item é spawnado
 	
-	# Criando a drop list para esse inimigo
+	# Criando a drop list para esse inimigo 
 	drop_list = {
 		'Health Potion' : ['res://assets/item/consumable/health_potion.png', 20, 'Health', 5, 2], # O tipo de item é uma chave e está relacionado, com as informações do item
 		# A primeira informação sobre o item é seu caminho para imagem, seguido da probabilidade de drop, seguido do tipo do item, seu valor e seu valor de venda

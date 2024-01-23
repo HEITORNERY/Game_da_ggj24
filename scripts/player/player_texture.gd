@@ -19,6 +19,9 @@ var chrouching_off : bool = false # Aqui o agachamento está desativado
 var suffix : String = '_right' # Aqui é para saber se a animação de ataque vai ser a da direita ou esquerda
 var normal_attack : bool = false # Variável de condição para dar dano com o ataque da espada, ou seja, o ataque normal sem mana
 
+# Aqui vai ser criado a variável para verificar se o ataque é do tipo mágico
+var magic_attack : bool = false
+
 # 4 - Aqui vai ser criado a função animate, que vai receber velocity como argumento
 # 5 - Aqui o argumento para animate pode ser qualquer nome, lá no código do player é usado velocity, pois essa é a variável lá
 # 6 - Aqui pode ser direction essa variável e assim como lá, por ser uma velocidade, vai ser um vector2
@@ -52,6 +55,7 @@ func verify_position(direction: Vector2) -> void:
 		position = Vector2.ZERO # Aqui eu vou colocar meu personagem na origem toda vez, que estiver olhando para a direita
 		player.direction = -1 # Pois aqui a direção do impulso é contrária a direita, ou seja, negativo para a esquerda
 		player.wall_ray.cast_to = Vector2(11.2, 0) # Aqui vai ser configurado para onde o raio da parede aponta, quando estiver olhando para direita 
+		player.spell_offset = Vector2(100, -50) # Aqui o feitiço é instanciado a direita
 		
 	elif direction.x < 0:
 		flip_h = true # 10 - Ele está com velocidae negativa, então está indo para esquerda, logo o personagem deve estar virado para essa direção
@@ -59,6 +63,7 @@ func verify_position(direction: Vector2) -> void:
 		position = Vector2(-2,0) # Isso daqui é para corigir a diferença entre a posição da espada do personagem e o limite da colisão do ataque
 		player.direction = 1 # Pois aqui a direção do impulso é contrária a esquerda, ou seja, positivo para a direita
 		player.wall_ray.cast_to = Vector2(-13.2, 0) # Aqui vai ser configurado para onde o raio da parede aponta, quando estiver olhando para esquerda vai ser 2 unidades maior, pois tem esse offset entre o limite da colisão e o braco do personagem 
+		player.spell_offset = Vector2(-100, -50) # Aqui o feitiço é instanciado a esquerda
 
 func horizontal_behavior(direction: Vector2) -> void:
 	if direction.x != 0: # 11 - O personagem está em movimento
@@ -104,6 +109,10 @@ func on_animation_finished(anim_name: String): # Aqui está o método para verif
 				
 		'dead': # Após a animação de morte acabar, deve emitir um sinal de fim de jogo
 			emit_signal('game_over') # Esse é o sinal de fim de jogo
+			
+		'spell_attack': # Após finalizar o ataque mágico o player pode atacar de novo
+			player.attacking = false
+			magic_attack = false
 				
 func action_behavior() -> void:
 	
@@ -114,6 +123,9 @@ func action_behavior() -> void:
 	elif player.attacking and normal_attack: # Aqui é a condição de atacar e de dar dano com o ataque normal 
 		animation.play('attack' + suffix) # Executar a animação de atacar com o sufixo, que pode ser esquerda ou direita
 		
+	elif player.attacking and magic_attack: # Aqui verifica se o player está atacando e se o ataque é do tipo mágico
+		animation.play('spell_attack') #Inicia-se a animação de ataque mágico
+	
 	elif player.defending and shield_off: # AQui é a situação para a defesa, que precisa do escudo desativado, ou seja, para defender não pode estar defendendo desde o início
 		animation.play('shield')
 		shield_off = false # Isso daqui é para quando a animação de defesa for realizada, ela vai ser realizada ao apertar e segurar a tecla de defesa, assim a animação só vai ser executada uma vez e vai congelar nela até a tecla ser liberada

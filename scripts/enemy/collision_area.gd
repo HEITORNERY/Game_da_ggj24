@@ -27,6 +27,13 @@ func on_collision_area_entered(area): # Sinal que vai detectar a entrada do play
 		# Função para atualizar a vida do inimigo subtraindo o dano do player de sua vida
 		update_health(player_attack)
 		
+	# Verificar se a área é uma área de feitiço
+	elif area is FireSpell:
+		update_health(area.spell_damage) # Atualizar avida do inimigo subtraindo o dano do ataque mágico
+		set_deferred('monitoring', false) # Desabilitar o monitoramento dos corpos entrando na área de colisão
+		# Isso vai permitir que tenha um tempo entre o inimigo ser atingido por diferentes bolas de fogo e tomar dano
+		timer.start(invulnerability_timer)
+		
 func update_health(damage: int) -> void:
 	health -= damage # A vida do inimigo vai ser subtraído do dano sofrido
 	
@@ -36,4 +43,6 @@ func update_health(damage: int) -> void:
 		
 	enemy.can_hit = true # O inimigo não está com sua vida zerada ou negativa, então leva o dano
 	
-		
+# Função ṕpara atualizar o tempo de invencibilidade ao tomar dano mágico
+func on_timer_timeout():
+	set_deferred('monitoring', true) # Acabou a invulnerabilidade e pode tomar dano mágico de novo
