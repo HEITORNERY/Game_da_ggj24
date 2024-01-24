@@ -59,6 +59,8 @@ var level_dict : Dictionary = {
 	'9': 356
 }
 
+onready var level_up_sound : AudioStreamPlayer2D = get_node("WowFX")
+
 # Agora na função ready, vai ser declarado valores para as variáveis que estão sem valor 
 func _ready():
 	current_mana = base_mana + bonus_mana # A mana atual é a soma da mana inicial e os bônus adquiridos
@@ -74,8 +76,7 @@ func update_exp(value: int) -> void: # Essa função precisa receber um valor do
 	current_exp += value # AQui quando a função de atualizar experiência for chamada, a  experiência atual vai ser somado o valor de value
 	
 	# Aqui vai ser chamado o grupo da barra de exp, pois o método de atualizar a barra de exp vai precisar ser chamado aqui, antes de executar a verificação de subir de nível
-	get_tree().call_group('bar_container', 'update_bar', 'ExpBar', current_exp) # Isso daqui atualiza a barra de vida com a xp atual recebida ao derrotar o inimigo
-	 
+	get_tree().call_group('bar_container', 'update_bar', 'ExpBar', current_exp) # Isso daqui atualiza a barra de exp com a xp atual recebida ao derrotar o inimigo
 	
 	# Condição de aumentar o nível com base na experiência
 	if current_exp >= level_dict[str(level)] and level < 9: # Aqui verifica se a experiência é suficiente para subir pro outro nível
@@ -83,6 +84,10 @@ func update_exp(value: int) -> void: # Essa função precisa receber um valor do
 		current_exp = leftover # Agora quando subir de nível o resto de experiência vai ser salvo pro personagem
 		on_level_up() # Função para carregar as mudanças ao subir de nível
 		level += 1 # Personagem gastou experiência, logo seu nível subiu uma unidade
+		
+		Global.level = level
+		
+		level_up_sound.play()
 		
 	elif current_exp >= level_dict[str(level)] and level == 9: #Situação de chegar no nível máximo
 		current_exp = level_dict[str(level)] # Aqui a experiência vai ser igual ao valor de experiência máxima do nível 9
