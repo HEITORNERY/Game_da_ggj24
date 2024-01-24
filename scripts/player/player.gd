@@ -62,6 +62,10 @@ export(int) var magic_attack_cost # Variável pro custo de mana, ao lançar um a
 var spell_offset : Vector2 = Vector2(100, -50)
 # O valor de 100 pode virar -100, mas o -50 é fixo
 
+# Guardar referência ao objeto de aúdio do pulo do player
+onready var jump_sound : AudioStreamPlayer2D = get_node("JumpFX")
+
+
 # Precisa-se de uma função que possa trabalhar com essas variáveis e aplicar essa física de movimento
 # Para isso existe a physics_process
 func _physics_process(delta: float):
@@ -113,6 +117,7 @@ func vertical_movement() -> void:
 	var jump_condition : bool = can_track_input and not attacking # Aqui é uma condição pro pulo a mais, que é não estar realizando nenhuma ação de ataque, agachar ou defender
 	if Input.is_action_just_pressed("ui_select") and jump_count < 2 and jump_condition: # Se a tecla de espaço foi pressionada e ainda não pulou 2 vezes
 		jump_count += 1 # Somar 1 ao contador de pulos
+		jump_sound.play() # Aqui vai ser executado o aúdio de pular ao iniciar o pulo
 		
 		if next_to_wall() and not is_on_floor(): # Next to wall é uma função que vai detectar quando o personagem estiver numa parede e tiver apertado a tecla de pulo
 			velocity.y = wall_jump_speed # Aqui o personagem está saindo da parede com a velocidade de seu pulo para cima
@@ -217,6 +222,8 @@ func spawn_spell() -> void:
 		
 	# Adiciona o feitiço como filho da cena
 	get_tree().root.call_deferred('add_child', spell)
+	
+	
 	
 	
 	

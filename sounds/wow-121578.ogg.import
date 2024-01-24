@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/wow-121578.ogg-86a1bc37d7a7d2f7d0e94a20ebaed942.oggstr"
+
+[deps]
+
+source_file="res://sounds/wow-121578.ogg"
+dest_files=[ "res://.import/wow-121578.ogg-86a1bc37d7a7d2f7d0e94a20ebaed942.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

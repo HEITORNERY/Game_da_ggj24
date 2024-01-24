@@ -22,6 +22,9 @@ var normal_attack : bool = false # Variável de condição para dar dano com o a
 # Aqui vai ser criado a variável para verificar se o ataque é do tipo mágico
 var magic_attack : bool = false
 
+# Guardar referência ao objeto de aúdio de hit do player
+export(NodePath) onready var hit_sound = get_node(hit_sound) as AudioStreamPlayer2D
+
 # 4 - Aqui vai ser criado a função animate, que vai receber velocity como argumento
 # 5 - Aqui o argumento para animate pode ser qualquer nome, lá no código do player é usado velocity, pois essa é a variável lá
 # 6 - Aqui pode ser direction essa variável e assim como lá, por ser uma velocidade, vai ser um vector2
@@ -30,6 +33,7 @@ func animate(direction: Vector2) -> void:
 	
 	if player.on_hit or player.dead: # Condição para tomar dano ou morrer tem prioridade sobre movimentação e as outras animações
 		hit_behavior() # Função para tratar das animações de morte e dano
+		hit_sound.play() # Inicia o som de dano
 	
 	# Agora foi adicionado mais uma condição para executar uma ação, que é a de estar colado na parede
 	elif player.attacking or player.defending or player.crouching or player.next_to_wall(): # Basta que ele esteja atacando ou defendendo ou agachado, que vai ser executado a ação correspondente

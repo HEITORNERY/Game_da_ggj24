@@ -9,10 +9,10 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 50, 10 )
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("SpellLight:texture_scale")
+tracks/0/path = NodePath("FireBall:lifetime")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -21,22 +21,22 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0.01 ]
+"values": [ 16.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("SpellLight:energy")
+tracks/1/path = NodePath("FireBall2:lifetime")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
 "update": 0,
-"values": [ 0.0 ]
+"values": [  ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Collision:position")
+tracks/2/path = NodePath("FireBall3:lifetime")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -45,10 +45,10 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 75 ) ]
+"values": [ 16.0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Collision:disabled")
+tracks/3/path = NodePath("FireBall3:amount")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -56,11 +56,11 @@ tracks/3/enabled = true
 tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
+"update": 1,
+"values": [ 50 ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("FireBall:speed_scale")
+tracks/4/path = NodePath("FireBall:amount")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -68,11 +68,11 @@ tracks/4/enabled = true
 tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 9.0 ]
+"update": 1,
+"values": [ 40 ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("FireBall2:speed_scale")
+tracks/5/path = NodePath("FireBall2:amount")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -80,20 +80,8 @@ tracks/5/enabled = true
 tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 9.0 ]
-}
-tracks/6/type = "value"
-tracks/6/path = NodePath("FireBall3:speed_scale")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 9.0 ]
+"update": 1,
+"values": [ 40 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -157,7 +145,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 9.0, 9.0 ]
+"values": [ 1.0, 9.0 ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("FireBall2:speed_scale")
@@ -166,10 +154,10 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 4 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 9.0 ]
+"values": [ 1.0, 9.0 ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("FireBall3:speed_scale")
@@ -178,10 +166,82 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 4 ),
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 9.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("FireBall:lifetime")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 9.0 ]
+"values": [ 15.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("FireBall2:lifetime")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 15.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("FireBall3:lifetime")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 15.0 ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("FireBall:amount")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 50 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("FireBall3:amount")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 50 ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("FireBall2:amount")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 50 ]
 }
 
 [node name="SpellArea" type="Area2D"]
@@ -192,17 +252,24 @@ script = ExtResource( 5 )
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 75 )
 shape = SubResource( 1 )
+disabled = true
 
 [node name="FireBall" parent="." instance=ExtResource( 3 )]
 emitting = false
+amount = 40
+lifetime = 16.0
 one_shot = true
 
 [node name="FireBall2" parent="." instance=ExtResource( 2 )]
 emitting = false
+amount = 40
+lifetime = 15.0
 one_shot = true
 
 [node name="FireBall3" parent="." instance=ExtResource( 1 )]
 emitting = false
+amount = 50
+lifetime = 16.0
 one_shot = true
 
 [node name="SpellLight" type="Light2D" parent="."]
@@ -211,7 +278,8 @@ texture_scale = 0.01
 energy = 0.0
 
 [node name="Animation" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 2 )
+autoplay = "light_strength"
+anims/RESET = SubResource( 4 )
 anims/light_strength = SubResource( 3 )
 
 [connection signal="animation_finished" from="Animation" to="." method="on_animation_finished"]

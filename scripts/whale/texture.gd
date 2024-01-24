@@ -4,6 +4,12 @@ extends EnemyTexture # Vamos herdar desse modelo, pois lá já tem funções pro
 # Nomear esse objeto 
 class_name WhaleTexture
 
+# Guardar referência ao som de hit
+export(NodePath) onready var hit_sound = get_node(hit_sound) as AudioStreamPlayer2D
+
+# Guardar referência ao som de morte do inimigo 
+export(NodePath) onready var kill_sound = get_node(kill_sound) as AudioStreamPlayer2D
+
 # Reescrever a função de animação
 func animate(velocity: Vector2) -> void:
 	if enemy.can_hit or enemy.can_die or enemy.can_attack: # Aqui vai ser as condições de chamar as animaçĩes de dano. morte e ataque do inimigo 
@@ -24,10 +30,12 @@ func action_behavior() -> void:
 		animation.play('dead')
 		enemy.can_hit = false # Morreu não pode mais tomar dano
 		enemy.can_attack = false # Morto não ataca
+		kill_sound.play() # Toca o som de morte do inimigo
 		
 	elif enemy.can_hit: # Não está morrendo, mas está levando dano
 		animation.play('hit') # Animação de dano vai rodar
 		enemy.can_attack = false # Durante o dano não vai ser possível atacar
+		hit_sound.play() # Tocar o áudio de hit
 		
 	elif enemy.can_attack: # Aqui o inimigo vai estar atacando
 		animation.play('attack')

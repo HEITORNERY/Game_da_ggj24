@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/enemy/enemy_template.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/enemy/whale/idle.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/enemy/whale/hit.png" type="Texture" id=6]
 [ext_resource path="res://assets/enemy/whale/attack.png" type="Texture" id=7]
 [ext_resource path="res://scripts/whale/whale.gd" type="Script" id=8]
+[ext_resource path="res://sounds/kill_sound.ogg" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 31, 20 )
@@ -311,6 +312,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=9]
 resource_name = "kill"
+length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:texture")
 tracks/0/interp = 1
@@ -368,10 +370,10 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -428,6 +430,8 @@ enemy_exp = 30
 texture = ExtResource( 2 )
 hframes = 44
 script = ExtResource( 4 )
+hit_sound = NodePath("../HitSound")
+kill_sound = NodePath("../KillSound")
 
 [node name="Collision" parent="." index="1"]
 visible = false
@@ -475,3 +479,6 @@ visible = false
 position = Vector2( -33, 0 )
 enabled = true
 cast_to = Vector2( 0, 30 )
+
+[node name="KillSound" parent="." index="8"]
+stream = ExtResource( 9 )

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/enemy/detection_area.gd" type="Script" id=1]
 [ext_resource path="res://scripts/enemy/enemy_template.gd" type="Script" id=2]
 [ext_resource path="res://scripts/enemy/enemy_texture.gd" type="Script" id=3]
 [ext_resource path="res://scripts/enemy/collision_area.gd" type="Script" id=4]
 [ext_resource path="res://scripts/enemy/enemy_attack_area.gd" type="Script" id=5]
+[ext_resource path="res://sounds/kill_enemy_sound.wav" type="AudioStream" id=6]
 
 [node name="EnemyTemplate" type="KinematicBody2D"]
 collision_layer = 8
@@ -47,6 +48,12 @@ script = ExtResource( 5 )
 [node name="Animation" type="AnimationPlayer" parent="."]
 
 [node name="FloorRay" type="RayCast2D" parent="."]
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+volume_db = -10.0
+
+[node name="KillSound" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="DetectionArea" to="DetectionArea" method="on_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="DetectionArea" method="on_body_exited"]

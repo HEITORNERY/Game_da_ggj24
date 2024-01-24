@@ -30,7 +30,6 @@ anim_speed = 2.0
 [node name="FireBall" type="Particles2D"]
 material = SubResource( 1 )
 lifetime = 2.0
-speed_scale = 9.0
 local_coords = false
 process_material = SubResource( 4 )
 texture = ExtResource( 1 )
