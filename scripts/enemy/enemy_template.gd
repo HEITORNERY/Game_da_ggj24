@@ -41,6 +41,9 @@ var drop_bonus : int = 1
 # Criando uma variável para a quantidade de exp fornecido pelo inimigo ao morrer
 export(int) var enemy_exp 
 
+# Acessar o caminho da cena da popup
+export(PackedScene) onready var floating_text
+
 # Chamar a função de atualizar o estado a cada frame
 func _physics_process(delta: float) -> void:
 	gravity(delta) # Função de gravidade
@@ -141,3 +144,19 @@ func spawn_physic_item(key: String, item_texture: StreamTexture, item_info: Arra
 	
 	item.update_item_info(key, item_texture, item_info) # AQui é fornecido as informações para a função de atualizar a informação do item, que está no physics item
 	
+
+func spawn_floating_text(type_sign: String, type: String, value: int) -> void:
+	# A função precisa do sinal, da cor e do valor
+	# Chamar o método de exibir o texto flutuante na tela
+	var text: FloatText = floating_text.instance()
+	
+	# Atualizar a posição inicial da popup como a posição do inimigo
+	text.rect_global_position = global_position
+	
+	# Atualizar as variáveis da string da popup
+	text.type = type
+	text.type_sign = type_sign
+	text.value = value
+	
+	# Adicionar o objeto a raiz da cena
+	get_tree().root.call_deferred('add_child', text)

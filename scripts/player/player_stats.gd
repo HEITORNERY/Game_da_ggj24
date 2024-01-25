@@ -61,6 +61,9 @@ var level_dict : Dictionary = {
 
 onready var level_up_sound : AudioStreamPlayer2D = get_node("WowFX")
 
+# Acessar o caminho da cena da popup
+export(PackedScene) onready var floating_text
+
 # Agora na função ready, vai ser declarado valores para as variáveis que estão sem valor 
 func _ready():
 	current_mana = base_mana + bonus_mana # A mana atual é a soma da mana inicial e os bônus adquiridos
@@ -74,6 +77,8 @@ func _ready():
 # Aqui vai ser criado uma função para atualizar a experiência do personagem
 func update_exp(value: int) -> void: # Essa função precisa receber um valor do tiṕpo inteiro, pois a experiência é um valor do tipo inteiro
 	current_exp += value # AQui quando a função de atualizar experiência for chamada, a  experiência atual vai ser somado o valor de value
+	# Aqui chama-se a função de spawnar a popup com o valor da exp atualizado
+	spawn_floating_text('+', 'Exp', value)
 	
 	# Aqui vai ser chamado o grupo da barra de exp, pois o método de atualizar a barra de exp vai precisar ser chamado aqui, antes de executar a verificação de subir de nível
 	get_tree().call_group('bar_container', 'update_bar', 'ExpBar', current_exp) # Isso daqui atualiza a barra de exp com a xp atual recebida ao derrotar o inimigo
@@ -113,6 +118,10 @@ func update_health(type: String, value: int) -> void: # ESsa função precisa de
 	match type: # Aqui vai ser criado as condições de aumento ou redução de vida
 		'Increase':
 			current_health += value # Aqui adiciona o valor obtido pelo item na vida
+			
+			# Aqui chama-se a função de spawnar a popup com o valor da vida atualizado
+			spawn_floating_text('+', 'Heal', value)
+			
 			# A vida do personagem, mesmo consumindo o item, não pode ultrapassar o valor máximo de vida pro nível
 			if current_health >= max_health:
 				current_health = max_health
@@ -140,9 +149,13 @@ func verify_shield(value: int) -> void: # O valor aqui é o do dano do inimigo
 # warning-ignore:narrowing_conversion
 		var damage : int = abs((base_defense + bonus_defense) - value)
 		current_health -= damage
+		# Aqui chama-se a função de spawnar a popup com o valor da vida atualizado
+		spawn_floating_text('-', 'Damage', damage)
 		
 	else: # Condição de não estar com o escudo ativo durante o dano do inimigo
 		current_health -= value # Tomou todo o dano do inimigo
+		# Aqui chama-se a função de spawnar a popup com o valor da exp atualizado
+		spawn_floating_text('-', 'Damage', value)
 		
 func update_mana(type: String, value: int) -> void: # A mana vai ter duas opções que é aumentar e diminuir
 	# Cada opção vai ter um valor correspondente
@@ -150,11 +163,15 @@ func update_mana(type: String, value: int) -> void: # A mana vai ter duas opçõ
 	match type: # Criar as condições de ganho e perda de mana
 		'Increase':
 			current_mana += value # Adicionando o valor de mana obtido
+			# Aqui chama-se a função de spawnar a popup com o valor da mana atualizado
+			spawn_floating_text('+', 'Mana', value)
 			if current_mana >= max_mana: # A mana não pode exceder o limite máximo
 				current_mana = max_mana
 			
 		'Decrease':
 			current_mana -= value
+			# Aqui chama-se a função de spawnar a popup com o valor da mana atualizado
+			spawn_floating_text('-', 'Mana', value)
 			
 	# Independente de ter perdido mana ou ganhado, a barra de mana precisa receber um valor e ser atualizada
 	get_tree().call_group('bar_container', 'update_bar', 'ManaBar', current_mana)
@@ -176,3 +193,18 @@ func on_collision_area_entered(area): # VErificar se a área que entrou em conta
 func on_invencibility_timer_timeout() -> void:# Método para verificar quando acabar o tempo de invencibilidade
 	collision_area.set_deferred('monitoring', true)
 	
+func spawn_floating_text(type_sign: String, type: String, value: int) -> void:
+	# A função precisa do sinal, da cor e do valor
+	# Chamar o método de exibir o texto flutuante na tela
+	var text: FloatText = floating_text.instance()
+	
+	# Atualizar a posição inicial da popup como a posição do player
+	text.rect_global_position = player.global_position
+	
+	# Atualizar as variáveis da string da popup
+	text.type = type
+	text.type_sign = type_sign
+	text.value = value
+	
+	# Adicionar o objeto a raiz da cena
+	get_tree().root.call_deferred('add_child', text)

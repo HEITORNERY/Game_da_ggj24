@@ -36,6 +36,8 @@ func on_collision_area_entered(area): # Sinal que vai detectar a entrada do play
 		
 func update_health(damage: int) -> void:
 	health -= damage # A vida do inimigo vai ser subtraído do dano sofrido
+	# Atualizar a popup com o dano do inimigo
+	enemy.spawn_floating_text('-', 'Damage', damage)
 	
 	if health <= 0: # Condição de morte do inimigo
 		enemy.can_die = true # Flag de morte do inimigo

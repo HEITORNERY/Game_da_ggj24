@@ -21,5 +21,5 @@ func _ready() -> void:
 		'Whale Mask' : ['res://assets/item/equipment/whale_mask.png', 3, 'Equipment', { 'Mana': 5, 'Magic Attack': 3}, 30]
 		# O item da máscara é do tipo equipável, ou seja, seu valor não vai ser mais vazio, mas sim uma lista com o tipo de atributo melhorado pela sua obtenção e quanto será melhorado
 	}
-	
+
 	
