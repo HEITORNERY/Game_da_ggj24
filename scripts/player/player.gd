@@ -65,6 +65,8 @@ var spell_offset : Vector2 = Vector2(100, -50)
 # Guardar referência ao objeto de aúdio do pulo do player
 onready var jump_sound : AudioStreamPlayer2D = get_node("JumpFX")
 
+onready var fire_magic_sound : AudioStreamPlayer2D = get_node("FireMagicFX")
+
 
 # Precisa-se de uma função que possa trabalhar com essas variáveis e aplicar essa física de movimento
 # Para isso existe a physics_process
@@ -164,7 +166,7 @@ func attack() -> void:
 		player_sprite.magic_attack = true # Vai ser usado o ataque mágico
 		spawn_spell()
 		stats.update_mana('Decrease', magic_attack_cost) # Reduza a mana, de acordo com o custo do ataque mágico
-		
+		fire_magic_sound.play()
 
 func defense() -> void: # Para a função de defesa, o princípio é o mesmo da de agachar
 	if Input.is_action_pressed('defense') and is_on_floor() and not crouching: # Aqui a tecla de defesa foi pressionada ou segurada e o personagem está no chão e não agachou, então pode realizar essa ação de defesa

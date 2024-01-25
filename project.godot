@@ -19,6 +19,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/enemy/collision_area.gd"
 }, {
+"base": "EnemyTemplate",
+"class": "Crabby",
+"language": "GDScript",
+"path": "res://scripts/enemy/crabby/crabby.gd"
+}, {
+"base": "EnemyTexture",
+"class": "CrabbyTexture",
+"language": "GDScript",
+"path": "res://scripts/enemy/crabby/texture.gd"
+}, {
 "base": "Area2D",
 "class": "DetectionArea",
 "language": "GDScript",
@@ -92,6 +102,8 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "BarContainer": "",
 "CollisionArea": "",
+"Crabby": "",
+"CrabbyTexture": "",
 "DetectionArea": "",
 "EnemyAttackArea": "",
 "EnemyTemplate": "",

@@ -44,6 +44,9 @@ export(int) var enemy_exp
 # Acessar o caminho da cena da popup
 export(PackedScene) onready var floating_text
 
+# Variável para o sufixo, que define a direção do ataque
+var attack_animation_suffix : String = '_left'
+
 # Chamar a função de atualizar o estado a cada frame
 func _physics_process(delta: float) -> void:
 	gravity(delta) # Função de gravidade
@@ -94,10 +97,14 @@ func verify_position() -> void:
 			floor_ray.global_position.x = abs(raycast_default_position) # O raycast do solo vai mudar de posição com o virar do personagem
 			# O raycast por padrão está no sentido negativo no começo, então ele vira pro sentido positivo, mas o módulo é o mesmo
 			# POr isso o abas para pegar o módulo e atribuir a position do raycast ao virar
-
+			# O sufixo da direção do ataque é right
+			attack_animation_suffix = '_right'
+			
 		elif direction < 0: # O personagem está a esquerda do inimigo
 			texture.flip_h = false # O inimigo já está virado para esquerda, por padrão
 			floor_ray.global_position.x = raycast_default_position # O raycast é negativa para esse caso, pois está virado para esquerda
+			# O sufixo da direção do ataque é left
+			attack_animation_suffix = '_left'
 			
 func kill_enemy() -> void: # Função para morte do inimigo
 	animation.play('kill') # Iniciar a animação de kill
