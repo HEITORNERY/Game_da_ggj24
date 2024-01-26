@@ -41,6 +41,7 @@ func action_behavior() -> void:
 		
 	elif enemy.can_attack: # Aqui o inimigo vai estar atacando
 		animation.play('attack_anticipation')
+		enemy.set_physics_process(false)
 		
 func _on_animation_finished(anim_name: String) -> void: # A função para lidar com o final de uma animação
 	match anim_name:

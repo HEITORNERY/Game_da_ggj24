@@ -12,13 +12,13 @@ func _ready() -> void:
 	
 	# Criando a drop list para esse inimigo 
 	drop_list = {
-		'Health Potion' : ['res://assets/item/consumable/health_potion.png', 15, 'Health', 5, 2], # O tipo de item é uma chave e está relacionado, com as informações do item
+		'Health Potion' : ['res://assets/item/consumable/health_potion.png', 25, 'Health', 5, 2], # O tipo de item é uma chave e está relacionado, com as informações do item
 		# A primeira informação sobre o item é seu caminho para imagem, seguido da probabilidade de drop, seguido do tipo do item, seu valor e seu valor de venda
-		'Mana POtion' : ['res://assets/item/consumable/mana_potion.png', 8, 'Mana', 5, 5],
-		'Crabby Eye' : ['res://assets/item/resource/crabby/crab_eye.png', 35, 'Resource', {}, 3], # Itens do tipo resource não podem ser consumidos, logo não recuperam nada e apenas podem ser vendidos
-		'Crabby Pincers' : ['res://assets/item/resource/crabby/crab_pincers.png', 10, 'Resource', {}, 7],
-		'Crabby Belt' : ['res://assets/item/equipment/crabby_belt.png', 5, 'Equipment', {'Health': 3, 'Attack': 1}, 30],
-		'Crabby Axe': ['res://assets/item/equipment/crabby_axe.png', 2, 'Weapon', { 'Attack': 3, 'Defense': 1}, 40]
+		'Mana Potion' : ['res://assets/item/consumable/mana_potion.png', 12, 'Mana', 5, 5],
+		'Pink Star Mouth' : ['res://assets/item/resource/pink_star/pink_star_mouth.png', 47, 'Resource', {}, 5], # Itens do tipo resource não podem ser consumidos, logo não recuperam nada e apenas podem ser vendidos
+		'Pink Star Bow' : ['res://assets/item/equipment/pink_star_bow.png', 1, 'Equipment', {'Attcak': 5}, 60],
+		'Pink Star Belt' : ['res://assets/item/equipment/pink_star_belt.png', 3, 'Equipment', {'Health': 5, 'Mana': 5}, 40],
+		'Pink Star Shield': ['res://assets/item/equipment/pink_star_shield.png', 1, 'Weapon', { 'Health': 3, 'Defense': 2}, 75]
 		# O item da máscara é do tipo equipável, ou seja, seu valor não vai ser mais vazio, mas sim uma lista com o tipo de atributo melhorado pela sua obtenção e quanto será melhorado
 	}
 

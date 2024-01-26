@@ -47,6 +47,8 @@ export(PackedScene) onready var floating_text
 # Variável para o sufixo, que define a direção do ataque
 var attack_animation_suffix : String = '_left'
 
+signal kill # Sinal para a morte do inimigo
+
 # Chamar a função de atualizar o estado a cada frame
 func _physics_process(delta: float) -> void:
 	gravity(delta) # Função de gravidade
@@ -114,6 +116,9 @@ func kill_enemy() -> void: # Função para morte do inimigo
 	
 	# Vai ser atualizado a exp, após a morte do inimigo e cada inimigo terá a sua exp liberada
 	get_tree().call_group('player_stats', 'update_exp', enemy_exp)
+	
+	# Emite o sinal de kill
+	emit_signal("kill")
 	
 func spawn_item_probability() -> void: 
 	# Aqui dentro vai ser rodado um dado de 0 a 20, que vai ser multiplicado por um multiplicador de drop, no qual, vai ser correspondente a porcentagem de drop desse item
