@@ -1,6 +1,6 @@
 extends Node2D
 
-# Quando uma calsse é criada, esse script é renomeado para o nome dessa classe
+# Quando uma classe é criada, esse script é renomeado para o nome dessa classe
 class_name Level
 
 # Guardar a referência ao player usando uma variável onready
