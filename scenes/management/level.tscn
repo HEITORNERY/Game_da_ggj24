@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://resources/floor.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/env/mask.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://scenes/interface/general/hud.tscn" type="PackedScene" id=9]
 [ext_resource path="res://sounds/background_sound.ogg" type="AudioStream" id=10]
 [ext_resource path="res://scenes/enemy/crabby.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/enemy/pink_star.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -62,6 +63,9 @@ position = Vector2( 218, 181 )
 
 [node name="Crabby" parent="Enemy" instance=ExtResource( 11 )]
 position = Vector2( 771, 183 )
+
+[node name="PinkStar" parent="Enemy" instance=ExtResource( 12 )]
+position = Vector2( 705, 432 )
 
 [node name="Hud" parent="." instance=ExtResource( 9 )]
 

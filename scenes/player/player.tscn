@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/player/char_red.png" type="Texture" id=1]
 [ext_resource path="res://scripts/player/player.gd" type="Script" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://sounds/wow-121578.ogg" type="AudioStream" id=8]
 [ext_resource path="res://scenes/env/floating_text.tscn" type="PackedScene" id=9]
 [ext_resource path="res://sounds/fire_magic_sound.ogg" type="AudioStream" id=10]
-[ext_resource path="res://sounds/lets_go.ogg" type="AudioStream" id=11]
 
 [sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 6, 15.5 )
@@ -600,9 +599,6 @@ animation = NodePath("../Animation")
 player = NodePath("..")
 attack_collision = NodePath("../AttackArea/Collision")
 hit_sound = NodePath("../HitkFX")
-
-[node name="LetsGoSound" type="AudioStreamPlayer2D" parent="Texture"]
-stream = ExtResource( 11 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( -1, 12.5 )

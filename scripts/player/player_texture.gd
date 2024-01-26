@@ -25,8 +25,6 @@ var magic_attack : bool = false
 # Guardar referência ao objeto de aúdio de hit do player
 export(NodePath) onready var hit_sound = get_node(hit_sound) as AudioStreamPlayer2D
 
-onready var lets_go_sound : AudioStreamPlayer2D = get_node("LetsGoSound")
-
 # 4 - Aqui vai ser criado a função animate, que vai receber velocity como argumento
 # 5 - Aqui o argumento para animate pode ser qualquer nome, lá no código do player é usado velocity, pois essa é a variável lá
 # 6 - Aqui pode ser direction essa variável e assim como lá, por ser uma velocidade, vai ser um vector2
@@ -74,8 +72,6 @@ func verify_position(direction: Vector2) -> void:
 func horizontal_behavior(direction: Vector2) -> void:
 	if direction.x != 0: # 11 - O personagem está em movimento
 		animation.play('run') # 12 - Estar rodando a animação de run
-		
-		lets_go_sound.play()
 		
 	else: #13 - É o caso de o personagem estar parado
 		animation.play('idle') # 14 - Rodar a animação de parado

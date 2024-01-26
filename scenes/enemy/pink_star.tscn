@@ -1,29 +1,60 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scenes/enemy/whale.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/enemy/crabby/attack.png" type="Texture" id=2]
-[ext_resource path="res://assets/enemy/crabby/idle.png" type="Texture" id=3]
-[ext_resource path="res://assets/enemy/crabby/hit.png" type="Texture" id=4]
-[ext_resource path="res://assets/enemy/crabby/dead.png" type="Texture" id=5]
-[ext_resource path="res://assets/enemy/crabby/run.png" type="Texture" id=6]
-[ext_resource path="res://scripts/enemy/crabby/crabby.gd" type="Script" id=7]
-[ext_resource path="res://scripts/enemy/crabby/texture.gd" type="Script" id=8]
+[ext_resource path="res://scripts/enemy/pink_star/pink_star.gd" type="Script" id=2]
+[ext_resource path="res://assets/enemy/pink_star/idle.png" type="Texture" id=3]
+[ext_resource path="res://assets/enemy/pink_star/run.png" type="Texture" id=4]
+[ext_resource path="res://assets/enemy/pink_star/hit.png" type="Texture" id=5]
+[ext_resource path="res://assets/enemy/pink_star/dead.png" type="Texture" id=6]
+[ext_resource path="res://assets/enemy/pink_star/attack.png" type="Texture" id=7]
+[ext_resource path="res://assets/enemy/pink_star/attack_anticipation.png" type="Texture" id=8]
+[ext_resource path="res://scripts/enemy/pink_star/texture.gd" type="Script" id=9]
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 9, 12 )
 
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 150, 15.5 )
+[sub_resource type="GDScript" id=12]
+script/source = "extends Area2D
+
+# Primeira a fazer é dar um nome para esse script
+class_name DetectionArea
+
+# Guardar referência ao EnemyTEmplate
+export(NodePath) onready var enemy = get_node(enemy) as KinematicBody2D
+
+func on_body_entered(body: Player) -> void: # Função para verificar quando o corpo do jogador entrou na área
+	enemy.player_ref = body # Player ref vai ser uma variável de enemy template, que vai guardar referência ao player como body, ou seja, como um corpo
+
+func on_body_exited(_body: Player) -> void: # Função para verificar quando o personagem saiu da área de detecção
+	# Esse _body serve para dizer, que não precisa-se do body, pois assim que o player sair da área de detecção a referência ao player vai ser perdida
+	enemy.player_ref = null # Não tem mais referência ao player
+"
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 83, 13.5 )
 
 [sub_resource type="RectangleShape2D" id=11]
-extents = Vector2( 11.875, 8.75 )
+extents = Vector2( 9, 12 )
 
-[sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 34, 6.5 )
+[sub_resource type="GDScript" id=9]
+script/source = "extends Area2D
+
+# Comece criando o nome para esse script
+class_name EnemyAttackArea
+
+# Terá duas variáveis para o dano do inimigo e o tempo de invencibilidade do personagem 
+export(int) var damage
+export(float) var invencibility_timer
+
+"
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 11, 12 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Texture:hframes")
+tracks/0/path = NodePath("Texture:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -32,10 +63,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 9 ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Texture:texture")
+tracks/1/path = NodePath("Texture:hframes")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -44,7 +75,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ ExtResource( 3 ) ]
+"values": [ 8 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Texture:frame")
@@ -59,7 +90,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath(".:modulate")
+tracks/3/path = NodePath("Texture:normal_map")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -68,10 +99,10 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ) ]
+"values": [ null ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("EnemyAttackArea/Collision:disabled")
+tracks/4/path = NodePath(".:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -80,10 +111,10 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("EnemyAttackArea:position")
+tracks/5/path = NodePath("EnemyAttackArea/Collision:disabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -92,11 +123,35 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("EnemyAttackArea/Collision:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 2 ) ]
+}
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
+"values": [  ]
 }
 
-[sub_resource type="Animation" id=5]
-resource_name = "attack_left"
+[sub_resource type="Animation" id=15]
+resource_name = "attack_anticipation"
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:texture")
 tracks/0/interp = 1
@@ -107,7 +162,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 8 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Texture:hframes")
@@ -119,7 +174,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 4 ]
+"values": [ 3 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Texture:frame")
@@ -128,38 +183,15 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("EnemyAttackArea/Collision:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("EnemyAttackArea:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
+"values": [ 0, 1, 2 ]
 }
 
 [sub_resource type="Animation" id=6]
-resource_name = "attack_right"
+resource_name = "attack_left"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:texture")
 tracks/0/interp = 1
@@ -170,7 +202,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 7 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Texture:hframes")
@@ -203,13 +235,13 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("EnemyAttackArea:position")
+tracks/4/path = NodePath("EnemyAttackArea/Collision:position")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -218,12 +250,129 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -4, 0 ) ]
+"values": [ Vector2( 1, 2 ) ]
 }
 
 [sub_resource type="Animation" id=7]
+resource_name = "attack_right"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("EnemyAttackArea/Collision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("EnemyAttackArea/Collision:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -1, 2 ) ]
+}
+
+[sub_resource type="Animation" id=4]
 resource_name = "dead"
 length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "set_physics_process"
+} ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "hit"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:texture")
 tracks/0/interp = 1
@@ -276,8 +425,9 @@ tracks/3/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "hit"
-length = 0.4
+resource_name = "idle"
+length = 0.8
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("Texture:texture")
 tracks/0/interp = 1
@@ -288,7 +438,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 4 ) ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Texture:hframes")
@@ -300,7 +450,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 4 ]
+"values": [ 8 ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Texture:frame")
@@ -309,65 +459,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3 ]
-}
-tracks/3/type = "method"
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ false ],
-"method": "set_physics_process"
-} ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "idle"
-length = 2.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Texture:hframes")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 9 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Texture:texture")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 3 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Texture:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -382,7 +477,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 5 ) ]
+"values": [ ExtResource( 6 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Texture:hframes")
@@ -420,8 +515,22 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "set_physics_process"
+} ]
+}
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "run"
 length = 0.6
 loop = true
@@ -435,7 +544,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 6 ) ]
+"values": [ ExtResource( 4 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Texture:hframes")
@@ -462,61 +571,60 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
 
-[node name="Crabby" instance=ExtResource( 1 )]
-scale = Vector2( 0.8, 0.8 )
-script = ExtResource( 7 )
-speed = 35
-proximity_threshold = 20
+[node name="PinkStar" instance=ExtResource( 1 )]
+scale = Vector2( 3, 3 )
+script = ExtResource( 2 )
+speed = 30
+proximity_threshold = 10
 raycast_default_position = -16
-enemy_exp = 70
+enemy_exp = 140
 
 [node name="Texture" parent="." index="0"]
 texture = ExtResource( 3 )
-hframes = 9
-script = ExtResource( 8 )
+hframes = 8
+script = ExtResource( 9 )
 
 [node name="Collision" parent="." index="1"]
-position = Vector2( 1, 4.5 )
-shape = SubResource( 9 )
+visible = true
+position = Vector2( 0, 0.5 )
+shape = SubResource( 14 )
 
 [node name="DetectionArea" parent="." index="2"]
 visible = true
+script = SubResource( 12 )
 
 [node name="Collision" parent="DetectionArea" index="0"]
 visible = false
-position = Vector2( 0, -2.5 )
-shape = SubResource( 10 )
+position = Vector2( 0, 0.5 )
+shape = SubResource( 13 )
 
 [node name="CollisionArea" parent="." index="3"]
-health = 14
-invulnerability_timer = 1.0
+health = 40
+invulnerability_timer = 1.2
 
 [node name="Collision" parent="CollisionArea" index="0"]
 visible = false
-position = Vector2( 0.625002, 3.75 )
-scale = Vector2( 0.999999, 0.999999 )
+position = Vector2( 0, 2 )
 shape = SubResource( 11 )
 
 [node name="EnemyAttackArea" parent="." index="4"]
-damage = 5
+script = SubResource( 9 )
+damage = 15
 invencibility_timer = 1.2
 
 [node name="Collision" parent="EnemyAttackArea" index="0"]
-position = Vector2( 2, 5.5 )
-shape = SubResource( 12 )
+position = Vector2( 1, 2 )
+shape = SubResource( 5 )
 disabled = false
 
 [node name="Animation" parent="." index="5"]
+autoplay = ""
 anims/RESET = SubResource( 1 )
-anims/attack_left = SubResource( 5 )
-anims/attack_right = SubResource( 6 )
-anims/dead = SubResource( 7 )
-anims/hit = SubResource( 2 )
-anims/idle = SubResource( 3 )
+anims/attack_anticipation = SubResource( 15 )
+anims/attack_left = SubResource( 6 )
+anims/attack_right = SubResource( 7 )
+anims/dead = SubResource( 4 )
+anims/hit = SubResource( 16 )
+anims/idle = SubResource( 2 )
 anims/kill = SubResource( 8 )
-anims/run = SubResource( 4 )
-
-[node name="FloorRay" parent="." index="6"]
-visible = true
-position = Vector2( -16, 0 )
-cast_to = Vector2( 0, 20 )
+anims/run = SubResource( 3 )
