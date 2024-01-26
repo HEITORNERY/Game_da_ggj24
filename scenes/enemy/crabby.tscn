@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://scenes/enemy/whale.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/enemy/crabby/attack.png" type="Texture" id=2]
@@ -8,6 +8,18 @@
 [ext_resource path="res://assets/enemy/crabby/run.png" type="Texture" id=6]
 [ext_resource path="res://scripts/enemy/crabby/crabby.gd" type="Script" id=7]
 [ext_resource path="res://scripts/enemy/crabby/texture.gd" type="Script" id=8]
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 10, 8.5 )
+
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 150, 15.5 )
+
+[sub_resource type="RectangleShape2D" id=11]
+extents = Vector2( 11.875, 8.75 )
+
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 34, 6.5 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -460,35 +472,40 @@ raycast_default_position = -16
 enemy_exp = 70
 
 [node name="Texture" parent="." index="0"]
-texture = ExtResource( 2 )
-hframes = 4
+texture = ExtResource( 3 )
+hframes = 9
 script = ExtResource( 8 )
 
 [node name="Collision" parent="." index="1"]
-visible = true
 position = Vector2( 1, 4.5 )
+shape = SubResource( 9 )
 
 [node name="DetectionArea" parent="." index="2"]
 visible = true
 
 [node name="Collision" parent="DetectionArea" index="0"]
+visible = false
 position = Vector2( 0, -2.5 )
+shape = SubResource( 10 )
 
 [node name="CollisionArea" parent="." index="3"]
-visible = true
 health = 14
 invulnerability_timer = 1.0
 
 [node name="Collision" parent="CollisionArea" index="0"]
-position = Vector2( 1, 1.5 )
+visible = false
+position = Vector2( 0.625002, 3.75 )
+scale = Vector2( 0.999999, 0.999999 )
+shape = SubResource( 11 )
 
 [node name="EnemyAttackArea" parent="." index="4"]
-position = Vector2( -4, 0 )
 damage = 5
 invencibility_timer = 1.2
 
 [node name="Collision" parent="EnemyAttackArea" index="0"]
+visible = true
 position = Vector2( 2, 5.5 )
+shape = SubResource( 12 )
 disabled = false
 
 [node name="Animation" parent="." index="5"]

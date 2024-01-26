@@ -10,17 +10,17 @@
 [ext_resource path="res://scripts/whale/whale.gd" type="Script" id=8]
 [ext_resource path="res://sounds/kill_sound.ogg" type="AudioStream" id=9]
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 10, 8.5 )
+[sub_resource type="RectangleShape2D" id=12]
+extents = Vector2( 26, 20 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 150, 15.5 )
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 11, 11.5 )
+extents = Vector2( 26, 14 )
 
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 34, 6.5 )
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 34, 20 )
 
 [sub_resource type="Animation" id=1]
 length = 0.7
@@ -436,7 +436,7 @@ kill_sound = NodePath("../KillSound")
 [node name="Collision" parent="." index="1"]
 visible = false
 position = Vector2( 0, 3 )
-shape = SubResource( 4 )
+shape = SubResource( 12 )
 
 [node name="DetectionArea" parent="." index="2"]
 visible = false
@@ -446,12 +446,11 @@ position = Vector2( 0, 3 )
 shape = SubResource( 5 )
 
 [node name="CollisionArea" parent="." index="3"]
-visible = false
 health = 10
 invulnerability_timer = 0.5
 
 [node name="Collision" parent="CollisionArea" index="0"]
-position = Vector2( 0, 3 )
+position = Vector2( -4, 8 )
 shape = SubResource( 8 )
 
 [node name="EnemyAttackArea" parent="." index="4"]
@@ -459,8 +458,9 @@ damage = 3
 invencibility_timer = 1.0
 
 [node name="Collision" parent="EnemyAttackArea" index="0"]
+visible = false
 position = Vector2( 0, 3 )
-shape = SubResource( 10 )
+shape = SubResource( 13 )
 disabled = true
 
 [node name="Animation" parent="." index="5"]
