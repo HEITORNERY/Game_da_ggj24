@@ -574,7 +574,7 @@ tracks/2/keys = {
 [node name="PinkStar" instance=ExtResource( 1 )]
 scale = Vector2( 3, 3 )
 script = ExtResource( 2 )
-speed = 30
+speed = 15
 proximity_threshold = 10
 raycast_default_position = -16
 enemy_exp = 140
@@ -585,7 +585,6 @@ hframes = 8
 script = ExtResource( 9 )
 
 [node name="Collision" parent="." index="1"]
-visible = true
 position = Vector2( 0, 0.5 )
 shape = SubResource( 14 )
 
@@ -603,7 +602,6 @@ health = 40
 invulnerability_timer = 1.2
 
 [node name="Collision" parent="CollisionArea" index="0"]
-visible = false
 position = Vector2( 0, 2 )
 shape = SubResource( 11 )
 
@@ -628,3 +626,15 @@ anims/hit = SubResource( 16 )
 anims/idle = SubResource( 2 )
 anims/kill = SubResource( 8 )
 anims/run = SubResource( 3 )
+
+[node name="EnemyBar" parent="." index="9"]
+margin_left = -17.0
+margin_top = -25.0
+margin_right = -17.0
+margin_bottom = -25.0
+rect_scale = Vector2( 0.5, 0.5 )
+
+[node name="HealthBar" parent="EnemyBar/BarBackground" index="0"]
+value = 0.0
+
+[node name="Tween" type="Tween" parent="." index="10"]

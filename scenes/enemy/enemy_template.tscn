@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/enemy/detection_area.gd" type="Script" id=1]
 [ext_resource path="res://scripts/enemy/enemy_template.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://scripts/enemy/enemy_attack_area.gd" type="Script" id=5]
 [ext_resource path="res://sounds/kill_enemy_sound.wav" type="AudioStream" id=6]
 [ext_resource path="res://scenes/env/floating_text.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/enemy/general/health_bar.png" type="Texture" id=8]
+[ext_resource path="res://assets/enemy/general/enemy_health_bar_background.png" type="Texture" id=9]
+[ext_resource path="res://scripts/enemy/enemy_bar.gd" type="Script" id=10]
 
 [node name="EnemyTemplate" type="KinematicBody2D"]
 collision_layer = 8
@@ -35,6 +38,7 @@ collision_layer = 8
 collision_mask = 0
 script = ExtResource( 4 )
 enemy = NodePath("..")
+enemy_bar = NodePath("../EnemyBar")
 
 [node name="Collision" type="CollisionShape2D" parent="CollisionArea"]
 
@@ -56,6 +60,32 @@ stream = ExtResource( 6 )
 volume_db = -10.0
 
 [node name="KillSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="EnemyBar" type="Control" parent="."]
+margin_left = -32.0
+margin_top = -22.0
+margin_right = -32.0
+margin_bottom = -22.0
+script = ExtResource( 10 )
+
+[node name="Tween" type="Tween" parent="EnemyBar"]
+
+[node name="BarBackground" type="TextureRect" parent="EnemyBar"]
+margin_right = 64.0
+margin_bottom = 17.0
+texture = ExtResource( 9 )
+
+[node name="HealthBar" type="TextureProgress" parent="EnemyBar/BarBackground"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -28.0
+margin_top = -1.5
+margin_right = 28.0
+margin_bottom = 0.5
+value = 100.0
+texture_progress = ExtResource( 8 )
 
 [connection signal="body_entered" from="DetectionArea" to="DetectionArea" method="on_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="DetectionArea" method="on_body_exited"]

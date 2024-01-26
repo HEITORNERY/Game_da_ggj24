@@ -13,6 +13,13 @@ export(float) var invulnerability_timer
 # Guardar a referência ao objeto pai do inimigo
 export(NodePath) onready var enemy = get_node(enemy) as KinematicBody2D
 
+# Guardar referência a barra de vida
+export(NodePath) onready var enemy_bar = get_node(enemy_bar) as Control
+
+# Função para inicializar a barra de vida do inimigo assim que iniciar a cena
+func _ready() -> void:
+	enemy_bar.init_bar(health)
+	
 func on_collision_area_entered(area): # Sinal que vai detectar a entrada do player na área de dano do inimigo
 	if area.get_parent() is Player: # Aqui vai ser verificado se o objeto pai da área que entrou em contato é o Player
 		
@@ -37,6 +44,10 @@ func on_collision_area_entered(area): # Sinal que vai detectar a entrada do play
 func update_health(damage: int) -> void:
 	health -= damage # A vida do inimigo vai ser subtraído do dano sofrido
 	# Atualizar a popup com o dano do inimigo
+	
+	# Atualizar a barra de vida
+	enemy_bar.update_bar(health)
+	
 	enemy.spawn_floating_text('-', 'Damage', damage)
 	
 	if health <= 0: # Condição de morte do inimigo

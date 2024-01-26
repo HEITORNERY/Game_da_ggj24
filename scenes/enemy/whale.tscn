@@ -11,13 +11,13 @@
 [ext_resource path="res://sounds/kill_sound.ogg" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=12]
-extents = Vector2( 26, 20 )
+extents = Vector2( 22, 15 )
 
 [sub_resource type="RectangleShape2D" id=5]
-extents = Vector2( 150, 15.5 )
+extents = Vector2( 83, 9 )
 
 [sub_resource type="RectangleShape2D" id=8]
-extents = Vector2( 26, 14 )
+extents = Vector2( 23, 16 )
 
 [sub_resource type="RectangleShape2D" id=13]
 extents = Vector2( 34, 20 )
@@ -434,8 +434,7 @@ hit_sound = NodePath("../HitSound")
 kill_sound = NodePath("../KillSound")
 
 [node name="Collision" parent="." index="1"]
-visible = false
-position = Vector2( 0, 3 )
+position = Vector2( -4, 3 )
 shape = SubResource( 12 )
 
 [node name="DetectionArea" parent="." index="2"]
@@ -450,7 +449,8 @@ health = 10
 invulnerability_timer = 0.5
 
 [node name="Collision" parent="CollisionArea" index="0"]
-position = Vector2( -4, 8 )
+visible = false
+position = Vector2( -3, 4 )
 shape = SubResource( 8 )
 
 [node name="EnemyAttackArea" parent="." index="4"]
@@ -482,3 +482,7 @@ cast_to = Vector2( 0, 30 )
 
 [node name="KillSound" parent="." index="8"]
 stream = ExtResource( 9 )
+
+[node name="EnemyBar" parent="." index="9"]
+margin_top = -46.0
+margin_bottom = -46.0
