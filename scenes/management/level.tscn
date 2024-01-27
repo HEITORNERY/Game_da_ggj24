@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://resources/floor.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/env/mask.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://scenes/player/Level.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/interface/menu/lamp.tscn" type="PackedScene" id=12]
 [ext_resource path="res://assets/font/Pacifico-Regular.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://scenes/interface/menu/FallingDetected.tscn" type="PackedScene" id=14]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 13 )
@@ -52,6 +53,9 @@ tile_data = PoolIntArray( 786424, 0, 0, 786425, 0, 0, 786426, 0, 0, 786427, 0, 0
 can_process = false
 
 [node name="Mask" parent="." instance=ExtResource( 2 )]
+
+[node name="FallingDetected" parent="." instance=ExtResource( 14 )]
+position = Vector2( 8, 88 )
 
 [node name="Lamp" parent="." instance=ExtResource( 12 )]
 

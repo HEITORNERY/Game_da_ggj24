@@ -10,12 +10,13 @@ onready var button_container : VBoxContainer = get_node("Menu/ButtonContainer")
 onready var continue_button : Button = button_container.get_node("Continue")
 
 func _ready() -> void:
+	$Sound.play()
+	
 	for button in get_tree().get_nodes_in_group('button'): # Acessar cada botão
 		button.connect('pressed', self, 'on_button_pressed', [button.name])
 		button.connect('mouse_exited', self, 'mouse_interaction', [button, 'exited'])
 		button.connect('mouse_entered', self, 'mouse_interaction', [button, 'entered'])
-
-		
+	
 func on_button_pressed(button_name: String) -> void:
 	match button_name:
 		'Play': # Aqui vai para a cena do level 1

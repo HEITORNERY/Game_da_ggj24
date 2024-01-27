@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scenes/interface/credits/credits.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+func _ready() -> void:
+	$AudioStreamPlayer2D.play()
+	
+	for button in get_tree().get_nodes_in_group('button'): # Acessar cada botão
+			button.connect('pressed', self, 'on_button_pressed', [button.name])
+			button.connect('mouse_exited', self, 'mouse_interaction', [button, 'exited'])
+			button.connect('mouse_entered', self, 'mouse_interaction', [button, 'entered'])
+			
+func on_button_pressed(button_name: String) -> void:
+	match button_name:
+		'Button':
+			var _changed_scene : bool = get_tree().change_scene(\"res://scenes/interface/menu/initial_screen.tscn\")
+			
+func mouse_interaction(button: Button, type: String) -> void:
+	match type: # Qunado o mouse estiver sobre o botão sua iluminação diminui e quando sair ela volta ao normal
+		'exited':
+			button.modulate.a = 1.0
+		'entered':
+			button.modulate.a = 0.5
+"
+
+[node name="References" instance=ExtResource( 1 )]
+script = SubResource( 1 )
+
+[node name="Label" parent="TextureRect/Texture" index="0"]
+margin_right = 517.0
+rect_scale = Vector2( 0.1, 0.4 )
+text = "This game was programmed by José Heitor Nery Viana, as well as the level design.
+
+My professional profile: 
+https://www.linkedin.com/in/jos%C3%A9-heitor-nery-viana-a707a8243/
+
+The arts used to make this game were all taken from itchio. The links are below:
+https://brullov.itch.io/generic-char-asset
+https://brullov.itch.io/oak-woods
+https://pixelfrog-assets.itch.io/treasure-hunters
+https://didigameboy.itch.io/jambo-jungle-free-sprites-asset-pack/download/eyJleHBpcmVzIjoxNzA2MTA5ODQxLCJpZCI6MTUxNzE0fQ%3d%3d.27jhgaus%2fmT%2fqIrh6GkBSqN%2benw%3d
+
+The sound effects were taken from the websites below, which offer copyright-free audio and sound effects of excellent quality::
+https://pixabay.com/pt/
+http://tastyspleen.net/~quake2/baseq2/players/lemming/pain100_2.wav
+https://opengameart.org/content/cute-cartoon-jump-sound-effect
+
+I would like to thank all the artists and musicians responsible for the incredible work they did in producing high-quality free material for game developers.
+
+Special thanks to the members of the Robotics, Automation and Intelligent Systems Laboratory (LABIRAS), who presented the tools to develop this game and for their guidance 
+throughout the game's development."
+
+[node name="Label" parent="TextureRect" index="1"]
+margin_left = 141.0
+margin_right = 195.0
+text = "References "
+
+[node name="Button" parent="." index="1"]
+margin_left = 258.0
+margin_top = 34.0
+margin_bottom = 54.0
+
+[node name="Label" parent="Button" index="0"]
+text = "Menu
+"
