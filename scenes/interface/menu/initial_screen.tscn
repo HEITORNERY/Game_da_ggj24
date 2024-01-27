@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/env/background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/font/thaleah_fat.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://scripts/interface/menu/initial_screen.gd" type="Script" id=3]
+[ext_resource path="res://assets/logo/WhatsApp Image 2024-01-22 at 18.40.07.jpeg" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 outline_size = 4
@@ -93,3 +94,16 @@ custom_fonts/font = SubResource( 4 )
 text = "Quit"
 align = 2
 valign = 1
+
+[node name="HContainer" type="HBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+margin_right = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="HContainer"]
+margin_right = 90.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 90, 0 )
+texture = ExtResource( 5 )
+expand = true
