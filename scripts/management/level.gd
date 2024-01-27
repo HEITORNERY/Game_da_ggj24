@@ -16,6 +16,6 @@ func _ready():
 	# Ele vai ser conectado dentro de on_game_over, que é um método que vai ser chamado, assim que a conexão forr feita
 	
 	background_sound.play()
-		
+			
 func on_game_over() -> void:
 	var _reload : bool = get_tree().reload_current_scene() # Aqui é a variável para recarregar a cena, assim que morrer

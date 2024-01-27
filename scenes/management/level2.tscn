@@ -15,3 +15,5 @@ enemy_amount = 3
 [node name="EnemySpawner2" parent="Enemy" index="1"]
 enemies_list = [ [ "res://scenes/enemy/pink_star.tscn", -11.5, 0, 100 ] ]
 enemy_amount = 1
+
+[editable path="Lamp"]

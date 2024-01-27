@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://resources/floor.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/env/mask.tscn" type="PackedScene" id=2]
@@ -12,6 +12,10 @@
 [ext_resource path="res://sounds/background_sound.ogg" type="AudioStream" id=10]
 [ext_resource path="res://scenes/player/Level.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/interface/menu/lamp.tscn" type="PackedScene" id=12]
+[ext_resource path="res://assets/font/Pacifico-Regular.ttf" type="DynamicFontData" id=13]
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 13 )
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -51,6 +55,15 @@ can_process = false
 
 [node name="Lamp" parent="." instance=ExtResource( 12 )]
 
+[node name="Alert" type="Label" parent="Lamp"]
+visible = false
+margin_left = -40.0
+margin_top = -48.0
+margin_right = 42.0
+margin_bottom = -19.0
+custom_fonts/font = SubResource( 2 )
+text = "Press Enter"
+
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( -18, 166 )
 jump_speed = -250
@@ -85,3 +98,5 @@ stream = ExtResource( 10 )
 volume_db = -20.0
 
 [node name="HUD" parent="." instance=ExtResource( 11 )]
+
+[editable path="Lamp"]
