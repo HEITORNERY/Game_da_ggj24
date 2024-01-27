@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://resources/floor.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/env/mask.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://scenes/env/enemy_spawner.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/interface/general/hud.tscn" type="PackedScene" id=9]
 [ext_resource path="res://sounds/background_sound.ogg" type="AudioStream" id=10]
+[ext_resource path="res://scenes/player/Level.tscn" type="PackedScene" id=11]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -79,3 +80,5 @@ can_respawn = true
 [node name="BackgorundSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
 volume_db = -20.0
+
+[node name="HUD" parent="." instance=ExtResource( 11 )]

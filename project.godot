@@ -159,12 +159,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Dawn Forest"
+run/main_scene="res://scenes/interface/menu/initial_screen.tscn"
 config/icon="res://icon.jpg"
 
 [autoload]
 
 Global="*res://Global.gd"
-LevelUP="*res://scenes/player/Level.tscn"
 
 [display]
 
