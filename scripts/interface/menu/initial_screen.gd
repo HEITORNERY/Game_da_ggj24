@@ -19,6 +19,7 @@ func on_button_pressed(button_name: String) -> void:
 	match button_name:
 		'Play': # Aqui vai para a cena do level 1
 			var _changed_scene : bool = get_tree().change_scene("res://scenes/management/main_scene.tscn")
+			Global.level = 1
 		'Quit': # Botão de fechar o jogo vai executar sua ação
 			get_tree().quit()
 			
