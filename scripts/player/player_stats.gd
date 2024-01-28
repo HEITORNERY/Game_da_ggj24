@@ -22,7 +22,7 @@ var base_health : int = 15
 var base_mana : int = 10
 var base_attack : int = 1
 var base_attack_magic : int = 3
-var base_defense : int = 1
+var base_defense : int = 2
 
 # Além dos atributos básicos, o personagem vai ter bônus provenientes de itens ou equipamentos
 var bonus_health : int = 0
@@ -93,6 +93,10 @@ func update_exp(value: int) -> void: # Essa função precisa receber um valor do
 		Global.level = level
 		
 		level_up_sound.play()
+		
+		base_attack += 1
+		base_attack_magic += 1
+		base_defense += 1
 		
 	elif current_exp >= level_dict[str(level)] and level == 9: #Situação de chegar no nível máximo
 		current_exp = level_dict[str(level)] # Aqui a experiência vai ser igual ao valor de experiência máxima do nível 9

@@ -55,7 +55,7 @@ can_process = false
 [node name="Mask" parent="." instance=ExtResource( 2 )]
 
 [node name="FallingDetected" parent="." instance=ExtResource( 14 )]
-position = Vector2( 8, 88 )
+position = Vector2( 24, 160 )
 
 [node name="Lamp" parent="." instance=ExtResource( 12 )]
 
