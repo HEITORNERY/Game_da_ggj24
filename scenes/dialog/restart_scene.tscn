@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/font/Pacifico-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/dialog/dialog_box_6.tscn" type="PackedScene" id=2]
+[ext_resource path="res://restart_scene.jpg" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 4
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+font_data = ExtResource( 1 )
+
+[node name="restart_scene" instance=ExtResource( 2 )]
+
+[node name="text" parent="." index="3"]
+custom_fonts/font = SubResource( 1 )
+text = "This challenge was very strong and I ended up losing, but an adventurer never gives up and I know that soft water and stone is hard, 
+it hits you so much, until it pierces. I will not give up. I will fight again, as many times as necessary.."
+
+[node name="Button" parent="." index="4"]
+custom_fonts/font = SubResource( 2 )
+text = "Restart"
+
+[node name="TextureRect" type="TextureRect" parent="." index="5"]
+margin_right = 320.0
+margin_bottom = 128.0
+texture = ExtResource( 3 )
+expand = true

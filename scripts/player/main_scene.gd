@@ -53,6 +53,6 @@ func _input(event: InputEvent) -> void:
 		Global.level = 1
 		
 func on_game_over() -> void:
-	var _reload : bool = get_tree().reload_current_scene() # Aqui é a variável para recarregar a cena, assim que morrer
-
+	var _restart : bool = get_tree().change_scene("res://scenes/dialog/restart_scene.tscn")
+	Global.level = 1
 	

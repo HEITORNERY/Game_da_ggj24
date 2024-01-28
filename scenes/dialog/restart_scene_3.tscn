@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/management/restart_scene_3.gd" type="Script" id=1]
+[ext_resource path="res://scenes/dialog/restart_scene_2.tscn" type="PackedScene" id=2]
+
+[node name="restart_scene_3" instance=ExtResource( 2 )]
+script = ExtResource( 1 )

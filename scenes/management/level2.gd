@@ -1,7 +1,7 @@
 extends Node2D
 
 # Quando uma classe é criada, esse script é renomeado para o nome dessa classe
-class_name Level
+class_name Level2
 
 # Guardar a referência ao player usando uma variável onready
 onready var player : KinematicBody2D = get_node("Player")
@@ -18,5 +18,5 @@ func _ready():
 	background_sound.play()
 			
 func on_game_over() -> void:
-	var _reload : bool = get_tree().change_scene('res://scenes/dialog/restart_scene_2.tscn')
+	var _reload : bool = get_tree().change_scene('res://scenes/dialog/restart_scene_3.tscn')
 	Global.level = 1
