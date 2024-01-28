@@ -15,29 +15,36 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("dialog"):
 		inst = dialog.instance()
 		$ui_canvas/control.add_child(inst)
-		$label.text = 'Press 2'
+		$label.visible = 0
 	
 	if event.is_action_pressed('dialog_2'):
 		inst = dialog_2.instance()
 		$ui_canvas/control.add_child(inst)
-		$label.text = 'Press 3'
+		$label.visible = 0
 
 	if event.is_action_pressed('dialog_3'):
 		inst = dialog_3.instance()
 		$ui_canvas/control.add_child(inst)
-		$label.text = 'Press 4'
+		$label.visible = 0
 		
 	if event.is_action_pressed('dialog_4'):
 		inst = dialog_4.instance()
 		$ui_canvas/control.add_child(inst)
-		$label.text = 'Press 5'
+		$label.visible = 0
 		
 	if event.is_action_pressed('dialog_5'):
+		inst = dialog_5.instance()
+		$ui_canvas/control.add_child(inst)
+		$label.visible = 0
+		
+	if event.is_action_pressed('dialog_6'):
 		inst = dialog_6.instance()
 		$ui_canvas/control.add_child(inst)
 		$label.visible = 0
+	
+	if event.is_action_pressed('skip_dialog'):
 		$ui_canvas/control.queue_free()
-		
+	
 	if event.is_action_pressed('skip_tutorial'):
 		get_tree().change_scene('res://scenes/management/level.tscn')
 		
