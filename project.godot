@@ -171,6 +171,7 @@ config/icon="res://icon.jpg"
 [autoload]
 
 Global="*res://Global.gd"
+Inventory="*res://scenes/interface/player/inventory/Inventory.tscn"
 
 [display]
 
@@ -292,6 +293,11 @@ skip_tutorial={
 skip_dialog={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":55,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+inventory={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":73,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
 

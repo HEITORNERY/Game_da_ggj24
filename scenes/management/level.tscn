@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://resources/floor.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/env/mask.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://assets/font/Pacifico-Regular.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://scenes/interface/menu/FallingDetected.tscn" type="PackedScene" id=14]
 [ext_resource path="res://scenes/interface/menu/lamp3.gd" type="Script" id=15]
+[ext_resource path="res://scenes/interface/player/inventory/Inventory.tscn" type="PackedScene" id=17]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 13 )
@@ -116,6 +117,8 @@ stream = ExtResource( 10 )
 volume_db = -20.0
 
 [node name="HUD" parent="." instance=ExtResource( 11 )]
+
+[node name="Inventory" parent="." instance=ExtResource( 17 )]
 
 [editable path="Lamp"]
 [editable path="Lamp2"]

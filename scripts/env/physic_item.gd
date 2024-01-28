@@ -40,19 +40,11 @@ func on_screen_exited(): # Verificar se o objeto saiu da cena
 	queue_free() # Objeto vai ser deletado ao sair da cena
 	
 	
-func on_body_entered(body: Player): # Verificar se um body entrou na área, ou seja, se o corpo do player entrou na área
-	player_ref = body # PLayer ref assume o valor de body, que corresponde ao objeto do player
-
-
-func on_body_exited(_body: Player): # Verificar se o player saiu da área de interação com o item
-	# o _body, significa que a função recebe body, mas não a utiliza 
-	player_ref = null # O ṕplayer não está mais na área
-	
-# Chamar a função process para lidar com os frames de atualização de coletar o item
-func _process(_delta: float) -> void:
-	if player_ref != null and Input.is_action_just_pressed('interact'):
-		# emitir um sinal para spawnar o item
-		# depois de coletado o item vai ser apagado
+func on_body_entered(body: Node): # Verificar se um body entrou na área, ou seja, se o corpo do player entrou na área
+	if body.inventory.add_item_inventory(sprite.texture):
 		queue_free()
+
+# 
+
 	
 	

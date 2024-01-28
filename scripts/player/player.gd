@@ -67,6 +67,8 @@ onready var jump_sound : AudioStreamPlayer2D = get_node("JumpFX")
 
 onready var fire_magic_sound : AudioStreamPlayer2D = get_node("FireMagicFX")
 
+onready var inventory = $"../Inventory"
+
 
 # Precisa-se de uma função que possa trabalhar com essas variáveis e aplicar essa física de movimento
 # Para isso existe a physics_process

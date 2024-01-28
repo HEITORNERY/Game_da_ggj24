@@ -15,7 +15,7 @@ font_data = ExtResource( 2 )
 
 [node name="text" parent="." index="3"]
 custom_fonts/font = SubResource( 1 )
-text = "With each defeated enemy, a new item will appear, so remember to collect them using the E key. These items are proof that I defeated
+text = "With each defeated enemy, a new item will appear, so remember to collect them. These items are proof that I defeated
 the monster. Now enough talk and let's get to the real adventure. Skip this tutorial by pressing Esc and go straight to the first floor
  of the dungeon. I spotted an enemy up ahead. It will be a test to see how strong I am."
 

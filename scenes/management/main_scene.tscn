@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/font/Pacifico-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/player/main_scene.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://scenes/enemy/whale.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scenes/interface/general/hud.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/player/Level.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/interface/player/inventory/Inventory.tscn" type="PackedScene" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 font_data = ExtResource( 1 )
@@ -60,3 +61,5 @@ position = Vector2( 584, 216 )
 [node name="Hud" parent="." instance=ExtResource( 9 )]
 
 [node name="HUD" parent="." instance=ExtResource( 10 )]
+
+[node name="Inventory" parent="." instance=ExtResource( 11 )]

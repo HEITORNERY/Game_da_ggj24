@@ -15,7 +15,7 @@ font_data = ExtResource( 1 )
 
 [node name="text" parent="." index="3"]
 custom_fonts/font = SubResource( 1 )
-text = "I can attack when I press the Q key, my defense is activated when I use the w key, but I'm not strong enough to resist attacks 
+text = "I can attack when I press the Q key, my defense is activated when I use the W key, but I'm not strong enough to resist attacks 
 from very strong monsters, so I need to rely more on my attack."
 
 [node name="Button" parent="." index="4"]
