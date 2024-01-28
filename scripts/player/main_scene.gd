@@ -36,6 +36,7 @@ func _input(event: InputEvent) -> void:
 		inst = dialog_6.instance()
 		$ui_canvas/control.add_child(inst)
 		$label.visible = 0
+		$ui_canvas/control.queue_free()
 		
 	if event.is_action_pressed('skip_tutorial'):
 		get_tree().change_scene('res://scenes/management/level.tscn')
