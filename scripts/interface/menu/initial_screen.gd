@@ -1,13 +1,11 @@
 extends Control
 
 # Guardar referência ao menu 
-onready var menu : Control = get_node("Menu")
+onready var menu : Control = get_node("CanvasLayer/Menu")
 
 # Guardar referência ao container dos botões
-onready var button_container : VBoxContainer = get_node("Menu/ButtonContainer")
+onready var button_container : VBoxContainer = get_node("CanvasLayer/Menu/ButtonContainer")
 
-# Guardar referência ao botão de continuar
-onready var continue_button : Button = button_container.get_node("Continue")
 
 func _ready() -> void:
 	$Sound.play()
